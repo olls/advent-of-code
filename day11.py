@@ -1,47 +1,30 @@
-import re
-
-
-def is_invalid(passwd):
-    fr = False
-    fp = r = p = p2 = 0
-    for l in passwd:
-        p_ = p
-        p = ord(l)
-        if p_ == p-1:
-            r += 1
-        else:
-            r = 0
-        if r > 1:
-            fr = True
-        if p2 == p:
-            fp += 1
-            p2 = 0
-        else:
-            p2 = p
-    if not fr or fp < 2:
-        return True
-    for l in 'iol':
-        if l in passwd:
-            return True
-    return False
-
-
-def parta(inp):
-    inp = list(inp)
-    invalid = True
-    while invalid:
-        carry = True
-        for j in range(len(inp)-1, -1, -1):
-            inp[j] = chr(ord(inp[j]) + 1)
-            if inp[j] > 'z':
-                inp[j] = 'a'
+def parta(i):
+    i = list(i)
+    while 1:
+        for j in range(len(i)-1, -1, -1):
+            i[j] = chr(ord(i[j]) + 1)
+            if i[j] > 'z':
+                i[j] = 'a'
             else:
                 break
-        invalid = is_invalid(inp)
-    global a_ans
-    a_ans = ''.join(inp)
-    return a_ans
+        r = d = p = s = a = 0
+        for l in i:
+            t = s
+            s = p
+            p = ord(l)
+            if s == p-1 and t == s-1:
+                r = 1
+            if a == p:
+                d += 1
+                a = 0
+            else:
+                a = p
+        if not any(l in i for l in 'iol') and r and d > 1:
+            break
+    global b
+    b = ''.join(i)
+    return b
 
 
-def partb(inp):
-    return parta(a_ans)
+def partb(i):
+    return parta(b)
